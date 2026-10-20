@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Synthesising the Literature: Seizure Freedom Activity</title>
+<style>
+  :root {
+    --navy: #1f3a56;
+    --green: #2f7d5a;
+    --purple: #6b46a3;
+    --orange: #c4660a;
+    --blue: #2563eb;
+    --red: #dc2626;
+    --amber: #d97706;
+    --bg: #f5f5f4;
+    --card: #ffffff;
+    --border: #d8d8d6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: #222;
+    margin: 0;
+    padding: 0 0 60px;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 24px 20px; }
+  h1 { color: var(--navy); font-size: 1.6rem; margin-bottom: 4px; }
+  .subtitle { color: #555; margin-bottom: 24px; }
+
+  .intro-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 28px;
+  }
+  .intro-card h2 { color: var(--navy); margin-top: 0; font-size: 1.1rem; }
+  .concepts {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+  }
+  .concept { text-align: center; max-width: 180px; }
+  .concept .icon { font-size: 2.2rem; display: block; margin-bottom: 6px; }
+  .concept.agree { color: var(--green); font-weight: 600; }
+  .concept.diff { color: var(--purple); font-weight: 600; }
+  .concept.pattern { color: var(--orange); font-weight: 600; }
+  .focus-note {
+    background: #eef3fb;
+    border-left: 4px solid var(--blue);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-top: 16px;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 0 24px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 6px;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    padding: 10px 18px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #777;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    border-radius: 6px 6px 0 0;
+    transition: all 0.15s ease;
+  }
+  .tab-btn:hover { background: #ececea; color: #333; }
+  .tab-btn.active { color: var(--navy); border-bottom-color: var(--navy); background: #ececea; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadein 0.25s ease; }
+  @keyframes fadein { from{opacity:0;} to{opacity:1;} }
+
+  .step-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .step-card h2 { color: var(--navy); margin-top: 0; }
+  .instructions { color: #444; margin-bottom: 16px; }
+
+  .findings-pool {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .finding-card {
+    background: #fafaf8;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    cursor: grab;
+    font-size: 0.92rem;
+    line-height: 1.4;
+    transition: box-shadow 0.15s ease, transform 0.1s ease;
+  }
+  .finding-card:active { cursor: grabbing; }
+  .finding-card.dragging { opacity: 0.4; }
+  .finding-card.placed { display: none; }
+  .buckets {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 640px) { .buckets { grid-template-columns: 1fr; } }
+  .bucket {
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    min-height: 110px;
+    background: #fbfbfa;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .bucket.dragover { background: #eef5f0; border-color: var(--green); }
+  .bucket-label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .swatch { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+  .swatch.vpa { background: #2563eb; }
+  .swatch.ltg { background: #ea580c; }
+  .swatch.noclear { background: #16a34a; }
+  .swatch.mixed { background: #d97706; }
+  .bucket .dropped-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+  .check-row { display: flex; gap: 10px; align-items: center; margin-top: 10px; }
+  button.primary {
+    background: var(--navy);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  button.primary:hover { background: #162c42; }
+  button.secondary {
+    background: none;
+    border: 1px solid var(--border);
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #444;
+  }
+  button.secondary:hover { background: #ececea; }
+  #step1-feedback, #step2-feedback { margin-top: 12px; font-weight: 600; padding: 10px 14px; border-radius: 8px; display: none; }
+  .feedback-correct { background: #e6f4ea; color: #166534; display: block !important; }
+  .feedback-incorrect { background: #fdeaea; color: #991b1b; display: block !important; }
+
+  .radio-option {
+    display: block;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .radio-option:hover { background: #f3f3f1; }
+  .radio-option input { margin-right: 10px; }
+  .think-box {
+    background: #f6f5fb;
+    border-left: 4px solid var(--purple);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-top: 18px;
+    font-size: 0.92rem;
+  }
+  .think-box ul { margin: 6px 0 0 18px; }
+
+  .word-bank {
+    background: #eef3fb;
+    border: 1px solid #c9d9ef;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .word-chip {
+    background: white;
+    border: 1px solid var(--blue);
+    color: var(--blue);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: grab;
+    user-select: none;
+  }
+  .word-chip.used { opacity: 0.3; pointer-events: none; }
+  .para-box {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    line-height: 2.1;
+    font-size: 0.97rem;
+    background: #fafaf8;
+  }
+  .blank {
+    display: inline-block;
+    min-width: 90px;
+    border-bottom: 2px solid var(--navy);
+    padding: 2px 6px;
+    margin: 0 2px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--navy);
+    background: #fff;
+    border-radius: 4px;
+  }
+  .blank.dragover { background: #eef5f0; }
+  .blank.filled { border-bottom-color: var(--green); }
+
+  .model-answer {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    line-height: 1.8;
+    background: #fafaf8;
+  }
+  .model-answer .signal { color: var(--red); font-weight: 700; }
+  .model-answer b { font-weight: 700; }
+  .why-box {
+    background: #eef6f5;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    font-size: 0.92rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Synthesising the Literature</h1>
+  <p class="subtitle">Seizure freedom / remission outcomes &mdash; a 4-step guided activity</p>
+
+  <div class="intro-card">
+    <h2>Introduction</h2>
+    <p>When synthesising the literature, writers do not simply list individual study findings &mdash; they compare findings across studies to identify:</p>
+    <div class="concepts">
+      <div class="concept agree"><span class="icon">&#129309;</span>Areas of agreement</div>
+      <div class="concept diff"><span class="icon">&#9678;</span>Areas of difference</div>
+      <div class="concept pattern"><span class="icon">&#128200;</span>Overall patterns</div>
+    </div>
+    <div class="focus-note">
+      In this activity, we will focus on the <b>Seizure freedom or remission</b> column in the extraction table. Work through the four tabs below in order &mdash; each step builds on the last.
+    </div>
+  </div>
+  <hr class="section-divider">
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="step1">Step 1: Classify</button>
+    <button class="tab-btn" data-tab="step2">Step 2: Spot the pattern</button>
+    <button class="tab-btn" data-tab="step3">Step 3: Build synthesis</button>
+    <button class="tab-btn" data-tab="step4">Step 4: Model answer</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-step1">
+    <div class="step-card">
+      <h2>Step 1: Classify the findings</h2>
+      <p class="instructions">Focus only on the <b>Seizure freedom or remission</b> column. Drag each finding card into the bucket that best describes the result.</p>
+
+      <div class="findings-pool" id="findings-pool">
+        <div class="finding-card" draggable="true" data-answer="vpa" id="f1">
+          <b>Tang et al. (2017):</b> VPA was more effective than LTG for seizure freedom at both 12 and 24 months.
+        </div>
+        <div class="finding-card" draggable="true" data-answer="mixed" id="f2">
+          <b>Campos et al. (2018):</b> LTG ranked highest for some seizure types, whereas VPA ranked higher for absence seizures.
+        </div>
+        <div class="finding-card" draggable="true" data-answer="vpa" id="f3">
+          <b>Marson et al. (2021):</b> VPA achieved higher 12- and 24-month remission rates than LEV.
+        </div>
+        <div class="finding-card" draggable="true" data-answer="noclear" id="f4">
+          <b>Nevitt et al. (2022):</b> No difference in time to 12-month remission between medications.
+        </div>
+      </div>
+
+      <div class="buckets">
+        <div class="bucket" data-bucket="vpa" ondrop="dropFinding(event,'vpa')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+          <div class="bucket-label"><span class="swatch vpa"></span>Favours VPA</div>
+        </div>
+        <div class="bucket" data-bucket="ltg" ondrop="dropFinding(event,'ltg')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+          <div class="bucket-label"><span class="swatch ltg"></span>Favours LTG</div>
+        </div>
+        <div class="bucket" data-bucket="noclear" ondrop="dropFinding(event,'noclear')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+          <div class="bucket-label"><span class="swatch noclear"></span>No clear difference</div>
+        </div>
+        <div class="bucket" data-bucket="mixed" ondrop="dropFinding(event,'mixed')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
+          <div class="bucket-label"><span class="swatch mixed"></span>Mixed findings</div>
+        </div>
+      </div>
+
+      <div class="check-row">
+        <button class="primary" onclick="checkStep1()">Check my answers</button>
+        <button class="secondary" onclick="resetStep1()">Reset</button>
+      </div>
+      <div id="step1-feedback"></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-step2">
+    <div class="step-card">
+      <h2>Step 2: Spot the pattern</h2>
+      <p class="instructions">Look at your sorted categories from Step 1. Which category contains the most evidence?</p>
+
+      <label class="radio-option"><input type="radio" name="step2" value="vpa"> Favours VPA</label>
+      <label class="radio-option"><input type="radio" name="step2" value="ltg"> Favours LTG</label>
+      <label class="radio-option"><input type="radio" name="step2" value="noclear"> No clear difference</label>
+      <label class="radio-option"><input type="radio" name="step2" value="mixed"> Mixed findings</label>
+
+      <div class="check-row">
+        <button class="primary" onclick="checkStep2()">Check my answer</button>
+      </div>
+      <div id="step2-feedback"></div>
+
+      <div class="think-box">
+        <b>Think about:</b>
+        <ul>
+          <li>Which category contains the most findings?</li>
+          <li>Is any category empty?</li>
+          <li>What does this suggest about the overall pattern?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-step3">
+    <div class="step-card">
+      <h2>Step 3: Build a synthesis paragraph</h2>
+      <p class="instructions">Drag words and phrases from the word bank into the gaps below.</p>
+
+      <div class="word-bank" id="word-bank">
+        <span class="word-chip" draggable="true" data-word="VPA">VPA</span>
+        <span class="word-chip" draggable="true" data-word="better seizure freedom or remission outcomes">better seizure freedom or remission outcomes</span>
+        <span class="word-chip" draggable="true" data-word="Tang et al. (2017)">Tang et al. (2017)</span>
+        <span class="word-chip" draggable="true" data-word="Marson et al. (2021)">Marson et al. (2021)</span>
+        <span class="word-chip" draggable="true" data-word="not entirely consistent">not entirely consistent</span>
+        <span class="word-chip" draggable="true" data-word="Campos et al. (2018)">Campos et al. (2018)</span>
+        <span class="word-chip" draggable="true" data-word="Nevitt et al. (2022)">Nevitt et al. (2022)</span>
+        <span class="word-chip" draggable="true" data-word="variation in findings">variation in findings</span>
+      </div>
+
+      <div class="para-box">
+        Across the studies, evidence suggests that
+        <span class="blank" data-correct="VPA" ondrop="dropWord(event,this)" ondragover="allowDrop(event)">______</span>
+        generally achieved
+        <span class="blank" data-correct="better seizure freedom or remission outcomes" ondrop="dropWord(event,this)" ondragover="allowDrop(event)">______</span>
+        than LTG and LEV.
+        <span class="blank" data-correct="Tang et al. (2017)" ondrop="dropWord(event,this)" ondragover="allowDrop(event)">______</span>
+        found that VPA was associated with higher rates of seizure freedom than LTG, while
+        <span class="blank" data-correct="Marson et al. (2021)" ondrop="dropWord(event,this)" ondragover="allowDrop(event)">______</span>
+        reported higher remission rates for VPA than LEV. However, the findings were
+        <span class="blank" data-correct="not entirely consistent" ondrop="dropWord(event,this)" ondragover="allowDrop(event)">______</span>.
+        <span class="blank" data-correct="Campos et al. (2018)" ondrop="dropWord(event,this)" ondragover="allowDrop(event)">______</span>
+        reported that outcomes varied according to seizure type, whereas
+        <span class="blank" data-correct="Nevitt et al. (2022)" ondrop="dropWord(event,this)" ondragover="allowDrop(event)">______</span>
+        found no significant differences in remission outcomes between medications. Overall, the evidence suggests that VPA generally produced more favourable seizure outcomes, although some
+        <span class="blank" data-correct="variation in findings" ondrop="dropWord(event,this)" ondragover="allowDrop(event)">______</span>
+        was observed across studies.
+      </div>
+
+      <div class="check-row">
+        <button class="primary" onclick="checkStep3()">Check my paragraph</button>
+        <button class="secondary" onclick="resetStep3()">Reset</button>
+      </div>
+      <div id="step3-feedback"></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-step4">
+    <div class="step-card">
+      <h2>Step 4: Compare with the model answer</h2>
+      <div class="model-answer">
+        <span class="signal">Across the studies</span>, evidence suggests that <b>valproic acid (VPA)</b> generally achieved <b>better seizure freedom or remission outcomes</b> than lamotrigine (LTG) and levetiracetam (LEV). <b>Tang et al. (2017)</b> found that VPA was associated with higher rates of seizure freedom than LTG, <span class="signal">while</span> <b>Marson et al. (2021)</b> reported higher remission rates for VPA than LEV. <span class="signal">However</span>, the findings were <b>not entirely consistent</b>. <b>Campos et al. (2018)</b> reported that outcomes varied according to seizure type, whereas <b>Nevitt et al. (2022)</b> found no significant differences in remission outcomes between medications. <span class="signal">Overall</span>, the evidence suggests that VPA generally produced more favourable seizure outcomes, although some <b>variation in findings</b> was observed across the four studies.
+      </div>
+      <div class="why-box">
+        <b>Why is this a synthesis?</b> It identifies a pattern, integrates evidence from multiple studies, acknowledges contrasting findings, and draws an overall conclusion.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+var draggedId = null;
+document.querySelectorAll('.finding-card').forEach(function(card){
+  card.addEventListener('dragstart', function(e){
+    draggedId = card.id;
+    card.classList.add('dragging');
+    e.dataTransfer.setData('text/plain', card.id);
+  });
+  card.addEventListener('dragend', function(){ card.classList.remove('dragging'); });
+});
+
+function allowDrop(e){ e.preventDefault(); e.currentTarget.classList.add('dragover'); }
+function dragLeave(e){ e.currentTarget.classList.remove('dragover'); }
+
+function dropFinding(e, bucketName){
+  e.preventDefault();
+  e.currentTarget.classList.remove('dragover');
+  var id = e.dataTransfer.getData('text/plain');
+  var card = document.getElementById(id);
+  if (!card) return;
+  var clone = card.cloneNode(true);
+  clone.classList.remove('dragging');
+  clone.removeAttribute('draggable');
+  clone.classList.add('dropped-item');
+  clone.dataset.placedIn = bucketName;
+  e.currentTarget.appendChild(clone);
+  card.classList.add('placed');
+  card.dataset.placed = bucketName;
+}
+
+function checkStep1(){
+  var fb = document.getElementById('step1-feedback');
+  var cards = document.querySelectorAll('.finding-card');
+  var total = cards.length, correct = 0, allPlaced = true;
+  cards.forEach(function(c){
+    if (!c.dataset.placed) { allPlaced = false; return; }
+    if (c.dataset.placed === c.dataset.answer) correct++;
+  });
+  if (!allPlaced){
+    fb.className = 'feedback-incorrect';
+    fb.textContent = 'Please sort all four findings into buckets before checking.';
+    return;
+  }
+  if (correct === total){
+    fb.className = 'feedback-correct';
+    fb.textContent = 'All ' + total + ' findings correctly classified! Move on to Step 2.';
+  } else {
+    fb.className = 'feedback-incorrect';
+    fb.textContent = correct + ' of ' + total + ' correct. Re-read the findings and try adjusting the ones that look misplaced.';
+  }
+}
+
+function resetStep1(){
+  document.querySelectorAll('.bucket .dropped-item').forEach(function(el){ el.remove(); });
+  document.querySelectorAll('.finding-card').forEach(function(c){
+    c.classList.remove('placed');
+    delete c.dataset.placed;
+  });
+  document.getElementById('step1-feedback').className = '';
+  document.getElementById('step1-feedback').textContent = '';
+}
+
+function checkStep2(){
+  var fb = document.getElementById('step2-feedback');
+  var selected = document.querySelector('input[name="step2"]:checked');
+  if (!selected){
+    fb.className = 'feedback-incorrect';
+    fb.textContent = 'Please select an option first.';
+    return;
+  }
+  if (selected.value === 'vpa'){
+    fb.className = 'feedback-correct';
+    fb.textContent = 'Correct \u2014 "Favours VPA" contains the most evidence (Tang et al. and Marson et al.), suggesting an overall pattern favouring VPA.';
+  } else {
+    fb.className = 'feedback-incorrect';
+    fb.textContent = 'Not quite. Look again at how many findings sit in each bucket \u2014 one category has two supporting studies.';
+  }
+}
+
+document.querySelectorAll('.word-chip').forEach(function(chip){
+  chip.addEventListener('dragstart', function(e){
+    e.dataTransfer.setData('text/plain', chip.dataset.word);
+  });
+});
+
+function dropWord(e, blankEl){
+  e.preventDefault();
+  blankEl.classList.remove('dragover');
+  var word = e.dataTransfer.getData('text/plain');
+  if (!word) return;
+  blankEl.textContent = word;
+  blankEl.dataset.filled = word;
+  blankEl.classList.add('filled');
+  var chip = Array.prototype.find.call(document.querySelectorAll('.word-chip'), function(c){ return c.dataset.word === word; });
+  if (chip) chip.classList.add('used');
+}
+
+document.querySelectorAll('.blank').forEach(function(b){
+  b.addEventListener('dragover', function(e){ e.preventDefault(); b.classList.add('dragover'); });
+  b.addEventListener('dragleave', function(){ b.classList.remove('dragover'); });
+});
+
+function checkStep3(){
+  var fb = document.getElementById('step3-feedback');
+  var blanks = document.querySelectorAll('.blank');
+  var correct = 0, filled = 0;
+  blanks.forEach(function(b){
+    if (b.dataset.filled) {
+      filled++;
+      if (b.dataset.filled === b.dataset.correct) correct++;
+    }
+  });
+  if (filled < blanks.length){
+    fb.className = 'feedback-incorrect';
+    fb.textContent = 'Fill in all the gaps before checking (' + filled + ' of ' + blanks.length + ' done).';
+    return;
+  }
+  if (correct === blanks.length){
+    fb.className = 'feedback-correct';
+    fb.textContent = 'Excellent! Your synthesis paragraph is complete and correct. Compare it with the model answer in Step 4.';
+  } else {
+    fb.className = 'feedback-incorrect';
+    fb.textContent = correct + ' of ' + blanks.length + ' gaps correct. Review the word bank and try again.';
+  }
+}
+
+function resetStep3(){
+  document.querySelectorAll('.blank').forEach(function(b){
+    b.textContent = '______';
+    delete b.dataset.filled;
+    b.classList.remove('filled');
+  });
+  document.querySelectorAll('.word-chip').forEach(function(c){ c.classList.remove('used'); });
+  document.getElementById('step3-feedback').className = '';
+  document.getElementById('step3-feedback').textContent = '';
+}
+</script>
+</body>
+</html>
