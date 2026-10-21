@@ -28,7 +28,6 @@
   .wrap { max-width: 920px; margin: 0 auto; padding: 24px 20px; }
   h1 { color: var(--navy); font-size: 1.6rem; margin-bottom: 4px; }
   .subtitle { color: #555; margin-bottom: 24px; }
-
   .intro-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -51,7 +50,6 @@
     border-top: 1px solid var(--border);
     margin: 0 0 24px;
   }
-
   .tabs {
     display: flex;
     gap: 6px;
@@ -76,16 +74,14 @@
   .tab-panel { display: none; }
   .tab-panel.active { display: block; animation: fadein 0.25s ease; }
   @keyframes fadein { from{opacity:0;} to{opacity:1;} }
-
   .step-card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 24px;
   }
-  .step-card h2 { color: var(--navy); margin-top: 0; }
+  .step-card h3 { color: var(--navy); margin-top: 0; font-size: 1.05rem; }
   .instructions { color: #444; margin-bottom: 16px; }
-
   .findings-pool {
     display: flex;
     flex-direction: column;
@@ -192,7 +188,6 @@
   #step1-feedback, #step2-feedback { margin-top: 12px; font-weight: 600; padding: 10px 14px; border-radius: 8px; display: none; }
   .feedback-correct { background: #e6f4ea; color: #166534; display: block !important; }
   .feedback-incorrect { background: #fdeaea; color: #991b1b; display: block !important; }
-
   .answer-key-box {
     display: none;
     margin-top: 16px;
@@ -207,7 +202,6 @@
   .answer-key-box ul { margin: 0; padding-left: 20px; }
   .answer-key-box li { margin-bottom: 6px; }
   .answer-key-box .ak-bucket { font-weight: 700; }
-
   .radio-option {
     display: flex;
     align-items: center;
@@ -241,7 +235,6 @@
     font-size: 0.92rem;
   }
   .think-box ul { margin: 6px 0 0 18px; }
-
   .word-bank {
     background: #eef3fb;
     border: 1px solid #c9d9ef;
@@ -291,7 +284,6 @@
   .blank.empty-state { cursor: default; }
   .blank.correct { background: #eaf6ee; border-bottom-color: var(--green); color: #166534; }
   .blank.incorrect { background: #fdeeee; border-bottom-color: var(--red); color: #991b1b; }
-
   .model-answer {
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -358,9 +350,8 @@
 <div class="wrap">
   <h1>Synthesising Evidence</h1>
   <p class="subtitle">Seizure freedom / remission outcomes &mdash; a guided activity</p>
-
   <div class="intro-card">
-    <h1>Activity 1</h1>
+    <h2>Activity 1</h2>
     <p>In your assignment, you will bring together (synthesise) the evidence from your four studies to answer your clinical question. Rather than simply listing individual study findings, you will compare findings to draw your conclusions.</p>
     <div class="steps-list">
       <p><b>Step 1</b>: Look for similarities and differences in the results</p>
@@ -372,18 +363,15 @@
     </div>
   </div>
   <hr class="section-divider">
-
   <div class="tabs">
     <button class="tab-btn active" data-tab="step1">Step 1: Look for similarities and differences</button>
     <button class="tab-btn" data-tab="step2">Step 2: Weigh up the evidence</button>
     <button class="tab-btn" data-tab="step3">Step 3: Synthesise your conclusions</button>
   </div>
-
   <div class="tab-panel active" id="tab-step1">
     <div class="step-card">
       <h3>Step 1: Look for similarities and differences in the results</h3>
       <p class="instructions">Focusing on <b>Seizure freedom or remission</b>, drag each finding into the category that best describes the result.</p>
-
       <div class="findings-pool" id="findings-pool">
         <div class="finding-card" draggable="true" data-answer="vpa" id="f1">
           <b>Tang et al. (2017):</b> VPA was more effective than LTG for seizure freedom at both 12 and 24 months.
@@ -398,7 +386,6 @@
           <b>Nevitt et al. (2022):</b> No difference in time to 12-month remission between medications.
         </div>
       </div>
-
       <div class="buckets">
         <div class="bucket" data-bucket="vpa" ondrop="dropFinding(event,'vpa')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
           <div class="bucket-label"><span class="swatch vpa"></span>Favours VPA</div>
@@ -413,14 +400,12 @@
           <div class="bucket-label"><span class="swatch mixed"></span>Mixed findings</div>
         </div>
       </div>
-
       <div class="check-row">
         <button class="primary" onclick="checkStep1()">Check my answers</button>
         <button class="secondary" onclick="resetStep1()">Reset</button>
         <button class="answer-key" onclick="toggleKey('step1-key')">Show answer key</button>
       </div>
       <div id="step1-feedback"></div>
-
       <div class="answer-key-box" id="step1-key">
         <h3>Answer key &mdash; Step 1</h3>
         <ul>
@@ -432,12 +417,10 @@
       </div>
     </div>
   </div>
-
   <div class="tab-panel" id="tab-step2">
     <div class="step-card">
       <h3>Step 2: Weigh up the evidence to identify the overall pattern</h3>
       <p class="instructions">Look at your sorted categories. Which category contains the most evidence?</p>
-
       <div class="think-box">
         <b>Think about:</b>
         <ul>
@@ -446,30 +429,25 @@
           <li>What does this suggest about the overall pattern?</li>
         </ul>
       </div>
-
       <label class="radio-option"><input type="radio" name="step2" value="vpa"><span class="option-swatch vpa"></span> Favours VPA</label>
       <label class="radio-option"><input type="radio" name="step2" value="ltg"><span class="option-swatch ltg"></span> Favours LTG</label>
       <label class="radio-option"><input type="radio" name="step2" value="noclear"><span class="option-swatch noclear"></span> No clear difference</label>
       <label class="radio-option"><input type="radio" name="step2" value="mixed"><span class="option-swatch mixed"></span> Mixed findings</label>
-
       <div class="check-row">
         <button class="primary" onclick="checkStep2()">Check my answer</button>
         <button class="answer-key" onclick="toggleKey('step2-key')">Show answer key</button>
       </div>
       <div id="step2-feedback"></div>
-
       <div class="answer-key-box" id="step2-key">
         <h3>Answer key &mdash; Step 2</h3>
         <p><b>Correct answer: Favours VPA.</b> Two of the four studies (Tang et al. 2017 and Marson et al. 2021) report VPA outperforming the comparator drugs, which is more than any other category. No category is empty, but "Favours VPA" has the strongest weight of evidence, suggesting the overall pattern leans towards VPA producing better seizure freedom/remission outcomes &mdash; with some inconsistency noted by Campos et al. and Nevitt et al.</p>
       </div>
     </div>
   </div>
-
   <div class="tab-panel" id="tab-step3">
     <div class="step-card">
       <h3>Step 3: Synthesise your conclusions in a paragraph</h3>
       <p class="instructions">Drag words and phrases from the word bank into the gaps below. Changed your mind? Drag a word out of a gap and back into the word bank to try again.</p>
-
       <div class="word-bank" id="word-bank" ondrop="dropToBank(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
         <span class="word-chip" draggable="true" data-word="VPA">VPA</span>
         <span class="word-chip" draggable="true" data-word="better seizure freedom or remission outcomes">better seizure freedom or remission outcomes</span>
@@ -480,7 +458,6 @@
         <span class="word-chip" draggable="true" data-word="Nevitt et al. (2022)">Nevitt et al. (2022)</span>
         <span class="word-chip" draggable="true" data-word="variation in findings">variation in findings</span>
       </div>
-
       <div class="para-box">
         Across the studies, evidence suggests that
         <span class="blank empty-state" data-correct="VPA" draggable="false" ondrop="dropWord(event,this)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">______</span>
@@ -500,14 +477,12 @@
         was observed across studies.
       </div>
       <p class="hint-note">Tip: drag a filled gap back onto the word bank above to remove it.</p>
-
       <div class="check-row">
         <button class="primary" onclick="checkStep3()">Check my paragraph</button>
         <button class="secondary" onclick="resetStep3()">Reset</button>
         <button class="answer-key" onclick="toggleKey('step3-key')">Show answer key</button>
       </div>
       <div id="step3-feedback"></div>
-
       <div class="answer-key-box" id="step3-key">
         <h3>Answer key &mdash; Language to show synthesis</h3>
         <p class="instructions">Hover over (or tap) the highlighted words to see how each one signals synthesis.</p>
@@ -520,9 +495,7 @@
       </div>
     </div>
   </div>
-
 </div>
-
 <script>
 document.querySelectorAll('.tab-btn').forEach(function(btn){
   btn.addEventListener('click', function(){
@@ -532,12 +505,10 @@ document.querySelectorAll('.tab-btn').forEach(function(btn){
     document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
   });
 });
-
 function toggleKey(id){
   var box = document.getElementById(id);
   box.classList.toggle('open');
 }
-
 /* Step 1 */
 document.querySelectorAll('.finding-card').forEach(function(card){
   card.addEventListener('dragstart', function(e){
@@ -546,51 +517,41 @@ document.querySelectorAll('.finding-card').forEach(function(card){
   });
   card.addEventListener('dragend', function(){ card.classList.remove('dragging'); });
 });
-
 function allowDrop(e){ e.preventDefault(); e.currentTarget.classList.add('dragover'); }
 function dragLeave(e){ e.currentTarget.classList.remove('dragover'); }
-
 function dropFinding(e, bucketName){
   e.preventDefault();
   e.currentTarget.classList.remove('dragover');
   var id = e.dataTransfer.getData('text/plain');
   var original = document.getElementById(id);
   if (!original) return;
-
   var existingCopy = document.querySelector('.dropped-item[data-source-id="' + id + '"]');
   if (existingCopy) existingCopy.remove();
-
   var clone = document.createElement('div');
   clone.className = 'dropped-item';
   clone.dataset.sourceId = id;
   clone.dataset.answer = original.dataset.answer;
   clone.innerHTML = '<span class="result-icon"></span>' + original.innerHTML;
   e.currentTarget.appendChild(clone);
-
   original.classList.add('placed');
   original.dataset.placed = bucketName;
   clone.dataset.placed = bucketName;
 }
-
 function checkStep1(){
   var fb = document.getElementById('step1-feedback');
   var originals = document.querySelectorAll('#findings-pool .finding-card');
   var total = originals.length, correct = 0, allPlaced = true;
-
   document.querySelectorAll('.dropped-item').forEach(function(d){
     d.classList.remove('correct', 'incorrect');
   });
-
   originals.forEach(function(c){
     if (!c.dataset.placed) { allPlaced = false; }
   });
-
   if (!allPlaced){
     fb.className = 'feedback-incorrect';
     fb.textContent = 'Please sort all four findings into buckets before checking.';
     return;
   }
-
   document.querySelectorAll('.dropped-item').forEach(function(d){
     var isCorrect = d.dataset.placed === d.dataset.answer;
     if (isCorrect) {
@@ -602,7 +563,6 @@ function checkStep1(){
       d.querySelector('.result-icon').textContent = '\u2717';
     }
   });
-
   if (correct === total){
     fb.className = 'feedback-correct';
     fb.textContent = 'All ' + total + ' findings correctly classified! Move on to Step 2.';
@@ -611,7 +571,6 @@ function checkStep1(){
     fb.textContent = correct + ' of ' + total + ' correct. Cards marked with a red cross need to move to a different bucket.';
   }
 }
-
 function resetStep1(){
   document.querySelectorAll('.dropped-item').forEach(function(el){ el.remove(); });
   document.querySelectorAll('.finding-card').forEach(function(c){
@@ -621,7 +580,6 @@ function resetStep1(){
   document.getElementById('step1-feedback').className = '';
   document.getElementById('step1-feedback').textContent = '';
 }
-
 /* Step 2 */
 function checkStep2(){
   var fb = document.getElementById('step2-feedback');
@@ -639,7 +597,6 @@ function checkStep2(){
     fb.textContent = 'Not quite. Look again at how many findings sit in each bucket \u2014 one category has two supporting studies.';
   }
 }
-
 /* Step 3 */
 document.querySelectorAll('.word-chip').forEach(function(chip){
   chip.addEventListener('dragstart', function(e){
@@ -647,13 +604,11 @@ document.querySelectorAll('.word-chip').forEach(function(chip){
     e.dataTransfer.setData('source', 'bank');
   });
 });
-
 function dropWord(e, blankEl){
   e.preventDefault();
   blankEl.classList.remove('dragover');
   var word = e.dataTransfer.getData('text/plain');
   if (!word) return;
-
   var source = e.dataTransfer.getData('source');
   if (source === 'blank') {
     var fromId = e.dataTransfer.getData('from-blank');
@@ -662,21 +617,17 @@ function dropWord(e, blankEl){
       if (fromBlank) clearBlank(fromBlank);
     }
   }
-
   if (blankEl.dataset.filled) {
     returnChipToBank(blankEl.dataset.filled);
   }
-
   blankEl.textContent = word;
   blankEl.dataset.filled = word;
   blankEl.classList.add('filled');
   blankEl.classList.remove('empty-state', 'correct', 'incorrect');
   blankEl.setAttribute('draggable', 'true');
-
   var chip = Array.prototype.find.call(document.querySelectorAll('.word-chip'), function(c){ return c.dataset.word === word && !c.classList.contains('used'); });
   if (chip) chip.classList.add('used');
 }
-
 function dropToBank(e){
   e.preventDefault();
   document.getElementById('word-bank').classList.remove('dragover');
@@ -687,7 +638,6 @@ function dropToBank(e){
     if (fromBlank) clearBlank(fromBlank);
   }
 }
-
 function clearBlank(blankEl){
   var word = blankEl.dataset.filled;
   if (!word) return;
@@ -698,12 +648,10 @@ function clearBlank(blankEl){
   blankEl.classList.add('empty-state');
   blankEl.setAttribute('draggable', 'false');
 }
-
 function returnChipToBank(word){
   var chip = Array.prototype.find.call(document.querySelectorAll('.word-chip'), function(c){ return c.dataset.word === word; });
   if (chip) chip.classList.remove('used');
 }
-
 var blankCounter = 0;
 document.querySelectorAll('.blank').forEach(function(b){
   blankCounter++;
@@ -717,27 +665,21 @@ document.querySelectorAll('.blank').forEach(function(b){
     e.dataTransfer.setData('from-blank', b.dataset.blankId);
   });
 });
-
 document.getElementById('word-bank').addEventListener('dragover', function(e){ e.preventDefault(); this.classList.add('dragover'); });
 document.getElementById('word-bank').addEventListener('dragleave', function(){ this.classList.remove('dragover'); });
-
 function checkStep3(){
   var fb = document.getElementById('step3-feedback');
   var blanks = document.querySelectorAll('.blank');
   var correct = 0, filled = 0;
-
   blanks.forEach(function(b){ b.classList.remove('correct', 'incorrect'); });
-
   blanks.forEach(function(b){
     if (b.dataset.filled) { filled++; }
   });
-
   if (filled < blanks.length){
     fb.className = 'feedback-incorrect';
     fb.textContent = 'Fill in all the gaps before checking (' + filled + ' of ' + blanks.length + ' done).';
     return;
   }
-
   blanks.forEach(function(b){
     if (b.dataset.filled === b.dataset.correct) {
       b.classList.add('correct');
@@ -746,7 +688,6 @@ function checkStep3(){
       b.classList.add('incorrect');
     }
   });
-
   if (correct === blanks.length){
     fb.className = 'feedback-correct';
     fb.textContent = 'Excellent! Your synthesis paragraph is complete and correct. Click "Show answer key" to see how synthesis language is used in the model answer.';
@@ -755,7 +696,6 @@ function checkStep3(){
     fb.textContent = correct + ' of ' + blanks.length + ' gaps correct. Gaps marked in red need another look.';
   }
 }
-
 function resetStep3(){
   document.querySelectorAll('.blank').forEach(function(b){
     b.textContent = '______';
